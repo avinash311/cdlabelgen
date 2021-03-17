@@ -1,0 +1,436 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+  <META Name="description" Content="Online Interface to cdlabelgen -
+        Printing CD/DVD Jewel Case inserts and CD/DVD Envelopes - Avinash Chopde">
+
+  <META Name="keywords" Content="cdlabelgen, cd, jewel case, inserts,
+  	envelope, Color, Postscript, Avinash, Chopde">
+
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+  <TITLE>Online CD/DVD Inserts and Envelopes - cdlabelgen</TITLE>
+
+  <LINK REL="shortcut icon" HREF="/favicon.ico">
+  <LINK REV="made" HREF="mailto:avinash@aczoom.com">
+
+  <style type="text/css">
+    BODY {margin-left: 5% ; margin-right: 5%}
+  </style>
+
+  <script language="JavaScript"><!--
+    function lockoutSubmit(button, seconds) {
+        // careful - may leave button in disabled state in some unknown cases.
+        // Shift-Refresh on page fixes it.
+        // And, back button causes the timer display "..processing.." So avoid this for ITRANS
+        // which outputs a new page, and so requires back button. Maybe OK to use this for
+        // cdinsert script, which stays on same page and outputs a .ps file to download.
+        // onclick="lockoutSubmit(this, 2)" not using this in the submit button.
+        // Seems to cause problems of submit button doing nothing for some users.
+        // (Even if Javacsript is disabled, should have submitted form.)
+        var oldValue = button.value;
+
+        button.setAttribute('disabled', true);
+        button.value = '...processing...';
+
+        setTimeout(function(){ button.value = oldValue; button.removeAttribute('disabled'); },
+                   seconds * 1000)
+    }
+    function clearFileInputField(tagId) {
+        // Since upload fields cannot be set by code (security), clearing requires just
+        // resetting the HTML code to original.
+        document.getElementById(tagId).innerHTML = document.getElementById(tagId).innerHTML;
+    }
+  //-->
+  </script>
+
+</HEAD>
+<BODY
+  TEXT="#000033" BGCOLOR="#EEEEFF"
+  LINK="#000066" VLINK="#666699" ALINK="#669966"
+  BACKGROUND="http://www.aczoom.com/images/smil_d3.gif">
+
+<!-- ================================ trailer ========================== -->
+<P>
+<CENTER>
+  <TABLE BORDER="1" CELLPADDING="7">
+
+    <TR ALIGN="center">
+      <TD>
+	<FONT SIZE="+0"> <A HREF="http://www.aczoom.com/" TARGET="_top">ACZoom Home</A> </FONT>
+      </TD>
+      <TD>
+	<FONT SIZE="+0"> <A HREF="http://www.aczoom.com/email.html" TARGET="_top">E-mail</A> </FONT>
+
+      </TD>
+      <TD>
+	<FONT SIZE="+0"> <A HREF="http://www.aczoom.com/tools/cdinsert/" TARGET="_top">CD/DVD Inserts and Envelopes</A> </FONT>
+      </TD>
+    </TR>
+  </TABLE>
+</CENTER>
+<P>
+<CENTER>
+<HR SIZE="2" WIDTH="100%">
+</CENTER>
+<!-- =============================== end trailer ========================= -->
+
+<H1 ALIGN="center">Online CD/DVD Inserts and Envelopes - Postscript Output</H1>
+<CENTER>
+
+<FONT SIZE="-0">cdlabelgen, version 4.0, august 2007</FONT> <BR>
+<FONT SIZE="+0"> <EM> free software </EM> </FONT> <BR>
+<FONT SIZE="+0">&copy; 2001-2007, Avinash Chopde</FONT>
+</CENTER>
+
+<P>
+<FONT SIZE="+1">
+March 2013 Update: Output from this web interface is a Postscript .ps file.
+<br/>
+If needed, run these PS to PDF converters on the .ps file output:
+<br>&nbsp; Online conversion: <a href="http://ps2pdf.com/convert.htm">ps2pdf.com</a>
+<br>&nbsp; Offline conversion for both Windows and Linux: install
+   <a href="http://ghostscript.com/">Ghostscript package</a> on your computer.
+<br>&nbsp; Install Postscript and PDF renderer from that site.
+</FONT>
+
+<CENTER>
+  <IMG SRC="http://www.aczoom.com/images/blueline2.gif" ALT="[[----blueline2.gif----]]"
+    WIDTH="560" HEIGHT="11">
+</CENTER>
+
+<P>
+<CENTER>
+<FONT SIZE="+1">
+<A HREF="http://www.aczoom.com/tools/cdinsert/#help" TARGET="_top">Examples and instructions</A>
+</FONT>
+
+&nbsp;&nbsp;[ if needed, or just start filling in the form. ]
+</CENTER>
+
+<P>
+<HR SIZE="2" WIDTH="100%" ALIGN="center">
+
+<!-- =============================== ========================= -->
+<FORM
+          ACTION="/cgi-bin/cdinsert-ps.pl" 
+	  METHOD="POST"
+	  ENCTYPE="multipart/form-data"
+	  ACCEPT-CHARSET="iso-8859-1"
+	  NAME="webform">
+
+      <TABLE CELLSPACING="0" CELLPADDING="10" BORDER="3" ALIGN="CENTER">
+      <TR VALIGN="top">
+
+	<TD COLSPAN="2">
+	  <b>1</b>: [Optional] Title and/or Subtitle.
+	  &nbsp;&nbsp;&nbsp;
+	  <BR>
+	  Title:
+	  <input type="text" name="title" value="" size="30" maxlength="200">
+	  &nbsp;&nbsp;&nbsp;&nbsp;
+	  Subtitle:
+	  <input type="text" name="subtitle" value="" size="30" maxlength="200">
+	</TD>
+
+      </TR>
+      <TR>
+	<TD COLSPAN="2">
+	<!-- empty row, just making thicker border! -->
+	</TD>
+      </TR>
+      <TR>
+	<TD COLSPAN="2">
+	  <b>2</b>: [Optional] Image to print as background on cover.
+	  <BR>
+
+	  &nbsp;&nbsp;
+          Select built-in image, or upload a JPEG image file.
+	</TD>
+      </TR>
+      <TR>
+	<TD>
+	  &nbsp; 2a: 
+	  Select cover background: <select name="cimage">
+	    <option value="" selected>- no image -</option>
+
+	    <option value="music1.eps">Music Notes 1</option>
+	    <option value="music2.eps">Music Notes 2</option>
+	    <option value="cd.eps">CD</option>
+	    <option value="cdda.eps">CDDA</option>
+	    <option value="mp3.eps">MP3</option>
+	    <option value="penguin.eps">Penguin</option>
+
+	    <option value="recycle.eps">Recycle</option>
+	    <option value="debian-color.eps">Debian</option>
+	    <option value="divx.eps">DivX</option>
+	    <option value="ogg.eps">Xiph.Org Logo</option>
+	    <option value="winamp.eps">Winamp</option>
+	  </select>
+
+	  &nbsp;
+	  ( <A HREF="http://www.aczoom.com/tools/cdinsert/exlogos.html">Pictures</A> )
+	</TD>
+	<TD ROWSPAN="2" VALIGN="middle">
+	  <input type="checkbox" name="clogo" value="true">Use image as logo, no scaling.
+	</TD>
+      </TR>
+      <TR>
+
+	<TD>
+	  &nbsp; 2b: 
+	  Upload cover JPEG:
+	    <input type=file name="cimagefile" size="17">
+	  <BR> &nbsp; &nbsp; 
+          [Small images only - total form data should not exceed 800KBytes.]
+	</TD>
+      </TR>
+      <TR>
+	<TD COLSPAN="2">
+	<!-- empty row, just making thicker border! -->
+	</TD>
+
+      </TR>
+      <TR>
+	<TD COLSPAN="2">
+	  <b>3</b>: [Optional] Image to print as background on tray card (or inside cover).
+	  <BR>
+	  &nbsp;&nbsp;
+          Select built-in image, or upload a JPEG image file.
+	</TD>
+      </TR>
+
+      <TR VALIGN="top">
+	<TD>
+	  &nbsp; 3a:
+	  Select tray background: <select name="timage">
+	    <option value="" selected>- no image -</option>
+	    <option value="music1.eps">Music Notes 1</option>
+	    <option value="music2.eps">Music Notes 2</option>
+
+	    <option value="cd.eps">CD</option>
+	    <option value="cdda.eps">CDDA</option>
+	    <option value="mp3.eps">MP3</option>
+	    <option value="penguin.eps">Penguin</option>
+	    <option value="recycle.eps">Recycle</option>
+	    <option value="debian-color.eps">Debian</option>
+
+	    <option value="divx.eps">DivX</option>
+	    <option value="ogg.eps">Xiph.Org Logo</option>
+	    <option value="winamp.eps">Winamp</option>
+	  </select>
+	  &nbsp;
+	  ( <A HREF="http://www.aczoom.com/tools/cdinsert/exlogos.html">Pictures</A> )
+	</TD>
+
+	<TD ROWSPAN="2" VALIGN="middle">
+	  <input type="checkbox" name="tlogo" value="true">Use image as logo, no scaling.
+	</TD>
+      </TR>
+      <TR VALIGN="top">
+	<TD>
+	  &nbsp; 3b:
+	  Upload tray JPEG:
+	    <input type=file name="timagefile" size="17">
+          <BR>
+	  &nbsp; &nbsp; 
+          [Small images only - total form data should not exceed 800KBytes.]
+	</TD>
+
+      </TR>
+      <TR COLSPAN="2">
+	<TD>
+	<!-- empty row, just making thicker border! -->
+	</TD>
+      </TR>
+      <TR>
+	<TD COLSPAN="2">
+	  <b>4</b>: Enter list of items (CD/DVD table of contents) here:
+	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+	  <input type="reset" value="[Clear All]">
+	  <BR>
+	  <textarea  name="contents" rows="20" cols="60"></textarea>
+	  <BR>
+	  OR:
+	  Select a text file containing
+	  the list of items (ASCII or Latin1 only):
+	  <BR>
+	  Upload text file:
+	      <input type=file name="filename" size="40">
+	</TD>
+
+      </TR>
+      <TR>
+	<TD>
+	  <b>5</b>: [Optional] Barcode/QRcode - overlay this on the tray.
+	  <BR>
+	  &nbsp;&nbsp;
+	  Enter barcode text:
+	  <input type="text" name="bcodetext" value="" size="30" maxlength="1000">
+	</TD>
+	<TD>
+	  Select barcode type/symbology:
+	  <br>
+	  &nbsp;&nbsp;
+	  <select name="bcodetype">
+	    <option value="Code39">Code39</option>
+	    <option value="QRcode" selected>QRcode</option>
+	    <option value="COOP2of5 ">COOP2of5 </option>
+	    <option value="EAN13">EAN13</option>
+	    <option value="EAN8">EAN8</option>
+	    <option value="IATA2of5">IATA2of5</option>
+	    <option value="Industrial2of5">Industrial2of5</option>
+
+	    <option value="ITF">ITF</option>
+	    <option value="Matrix2of5">Matrix2of5</option>
+	    <option value="NW7">NW7</option>
+	    <option value="UPCA">UPC-A</option>
+	    <option value="UPCE">UPC-E</option>
+	  </select>
+
+	  <p>
+	  &nbsp;
+	  ( Barcode types: <A HREF="http://search.cpan.org/~kwitknr/GD-Barcode/">GD::Barcode</A> )
+	</TD>
+      </TR>
+      <TR>
+	<TD COLSPAN="2">
+	<!-- empty row, just making thicker border! -->
+	</TD>
+
+      </TR>
+      <TR VALIGN="middle">
+	<TD>
+	  <b>6a</b>: Choose Output Type:
+
+	  <BR>
+	  &nbsp;&nbsp;&nbsp;
+	  <input type="radio" name="cdcase" value="normal" checked>Create
+	  Inserts for Normal CD Case
+	  <BR>
+	  &nbsp;&nbsp;&nbsp;
+
+	  <input type="radio" name="cdcase" value="slimcase">Create Folding
+	  Insert for Slim CD Case
+	  <BR>
+	  &nbsp;&nbsp;&nbsp;
+	  <input type="radio" name="cdcase" value="dvdinside">Create Inside
+	  Insert for DVD Case
+	  <BR>
+	  &nbsp;&nbsp;&nbsp;
+	  <input type="radio" name="cdcase" value="dvdoutside">Create Outside
+	  Cover for DVD Case
+	  <BR>
+	  &nbsp;&nbsp;&nbsp;
+	  <input type="radio" name="cdcase" value="doublecase">Create Outside
+	  Insert for Double DVD Case
+	  <BR>
+	  &nbsp;&nbsp;&nbsp;
+	  <input type="radio" name="cdcase" value="envelope">Create Envelope
+	  for CD/DVD
+	</TD>
+
+	<TD ROWSPAN="2" VALIGN="middle">
+	  <b>7</b>: 
+	  &nbsp;&nbsp;&nbsp;
+          <input type="submit" name="submitkey"
+                 value="Submit for processing">
+          
+	</TD>
+      </TR>
+      <TR VALIGN="middle">
+	<TD>
+
+	  <b>6b</b>: Select options:
+
+	  <BR>
+	  &nbsp;&nbsp;&nbsp;
+	  <input type="checkbox" name="notrayheading" value="true">Omit
+	  Title &amp; Subtitle from Tray (more space for items)
+
+	  <BR>
+	  &nbsp;&nbsp;&nbsp;
+	  <input type="checkbox" name="nocoverheading" value="true">Omit
+	  Title &amp; Subtitle from Cover
+
+	  <BR>
+	  &nbsp;&nbsp;&nbsp;
+	  <input type="checkbox" name="scaleitems" value="true">Enable
+	  scaling down of items (no clipping) if needed
+
+	  <BR>
+	  &nbsp;&nbsp;&nbsp;
+	  <input type="checkbox" name="splititems" value="false">Print
+	  half the items on cover, rest on tray card
+
+	  <BR>
+	  &nbsp;&nbsp;&nbsp;
+	  <input type="checkbox" name="a4paper" value="true">Adjust
+	  image up for A4 paper (instead of Letter)
+	</TD>
+      </TR>
+      </TABLE>
+
+    </FORM>
+
+<P>
+<CENTER>
+<HR SIZE="2" WIDTH="100%">
+</CENTER>
+
+<b>
+Email any bug-reports or comments to:
+Avinash Chopde
+&lt;<a href="mailto:avinash@aczoom.com">avinash@aczoom.com</a>&gt;
+<BR>
+If this form stops working, use above email to send as much information 
+as you can.
+</b>
+<BR>
+FAQ: <A HREF="http://www.aczoom.com/tools/cdinsert/#incorrectsize" TARGET="_top">"Help:
+Printout is not the correct size!"</A> - 
+This is a configuration problem, and nothing to do with this utility.
+<BR>
+
+<EM>
+Please note that no technical support is available for 
+the tools on this web page.
+</EM>
+<!-- =============================== ========================= -->
+
+<P>
+<CENTER>
+  <IMG SRC="http://www.aczoom.com/images/blueline2.gif" ALT="[[----blueline2.gif----]]"
+    WIDTH="560" HEIGHT="11">
+</CENTER>
+
+<P>
+<CENTER>
+  <TABLE BORDER="1" CELLPADDING="7">
+
+    <TR ALIGN="center">
+      <TD>
+	<FONT SIZE="+0"> <A HREF="http://www.aczoom.com/" TARGET="_top">ACZoom Home</A> </FONT>
+      </TD>
+      <TD>
+	<FONT SIZE="+0"> <A HREF="http://www.aczoom.com/email.html" TARGET="_top">E-mail</A> </FONT>
+
+      </TD>
+      <TD>
+	<FONT SIZE="+0"> <A HREF="http://www.aczoom.com/tools/cdinsert/" TARGET="_top">CD/DVD Inserts and Envelopes</A> </FONT>
+      </TD>
+    </TR>
+  </TABLE>
+</CENTER>
+<P>
+
+
+<CENTER>
+<HR SIZE="2" WIDTH="100%">
+</CENTER>
+<!-- =============================== end trailer ========================= -->
+
+<IMG SRC="http://www.aczoom.com/images/linux.logosml.32.gif" ALT="--Linux Rules!--"
+  WIDTH=92 HEIGHT=39 ALIGN="right">
+</BODY></HTML>

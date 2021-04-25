@@ -8,17 +8,18 @@ have problems installing this package for web access.
 There are no step-by-step instructions, for help, here are the docs
 to look at:
 - sample web page ( http://www.aczoom.com/tools/cdinsert/  )
-- the cdinsert.pl perl script
+- the cdinsert-ps.pl perl script modified for your web site
+-   See the comments in web script cdinsert-ps.pl for installing it.
 - this doc, which contains some snippets of HTML template files, etc
 
 ------------------------------------------------------------------------------
 This file contains example of three html files:
 
-1: Example of HTML FORM that calls cdinsert.pl [form.tmpl]
-2: Example of initial.tmpl working.tmpl done.tmpl used by cdinsert.pl
+1: Example of HTML FORM that calls cdinsert-ps.pl [form.tmpl]
+2: Example of initial.tmpl working.tmpl done.tmpl used by cdinsert-ps.pl
 3: crontab entry to clean tmp files
 
------------- 1: form.tmpl Example of Form that calls cdinsert.pl -----------
+------------ 1: form.tmpl Example of Form that calls cdinsert-ps.pl -----------
 <!-- form template - just the form, no header/footer -->
 <!-- =========================================================== -->
 <!-- display the form only if the remote CGI server is alive,
@@ -30,7 +31,7 @@ This file contains example of three html files:
 <H2 ALIGN="center">Online CD Inserts and Envelopes</H2>
 
 <FORM
-          ACTION="/cgi-bin/cdinsert.pl"
+          ACTION="/cgi-bin/cdinsert-ps.pl"
 	  METHOD="POST"
 	  ENCTYPE="multipart/form-data"
 	  NAME="webform">

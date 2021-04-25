@@ -1,3 +1,11 @@
+Pending
+
+  * 2021
+  * ImageMagick convert --format=EPS returns Uninitialized while EPS2, EPS3,
+  *   ESPF work. Using EPSF 7bit ASCII (though EPS2/3 binary is fine too).
+  * Rename unused script to cdinsert-pdf-gif.pl
+  * Add how to install on Linux in cdinsert-ps.pl script as comments.
+
 2013-03-31
 
   4.3.0

@@ -13,6 +13,7 @@ or
 'man cdlabelgen' will show you the documentation for cdlabelgen.
 Or, use the pre-made cdlabelgen.html to view the  man page.
 
+See the comments in web script cdinsert-ps.pl for installing it.
 
 =head1 NOTES
 

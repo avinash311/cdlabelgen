@@ -5,6 +5,9 @@ SHELL = /bin/bash
 VERSION = 4.3.1
 ZIPVERSION = 431
 # for 2.0.0, use 200, etc - note - lines above should have no spaces at end
+TAG=
+TAG=-beta
+# Use TAG=beta for pending releases - updated files, but not finalized yet
 
 # Where you want cdlabelgen and related files to be
 # Change these to locations you need, also
@@ -71,9 +74,9 @@ dist: docs cdlabelgen-$(VERSION).spec
 	cp $(SOURCES) cdlabelgen-$(VERSION)/
 	mv cdlabelgen-$(VERSION).spec cdlabelgen-$(VERSION)/
 	cd postscript; cp $(POSTSCRIPT) ../cdlabelgen-$(VERSION)/postscript
-	rm -f cdlbl$(ZIPVERSION).zip cdlabelgen-$(VERSION).tgz
-	zip -r cdlbl$(ZIPVERSION) cdlabelgen-$(VERSION)
-	tar cvzf cdlabelgen-$(VERSION).tgz cdlabelgen-$(VERSION)
+	rm -f cdlbl$(ZIPVERSION)$(TAG).zip cdlabelgen-$(VERSION)$(TAG).tgz
+	zip -r cdlbl$(ZIPVERSION)$(TAG) cdlabelgen-$(VERSION)
+	tar cvzf cdlabelgen-$(VERSION)$(TAG).tgz cdlabelgen-$(VERSION)
 	rm -rf cdlabelgen-$(VERSION)
 
 clean:

@@ -16,7 +16,7 @@ BASE_DIR   = /usr
 BIN_DIR   = $(BASE_DIR)/bin
 LIB_DIR   = $(BASE_DIR)/share/cdlabelgen
 MAN_DIR   = $(BASE_DIR)/share/man
-WEBSOURCES= ../cdinsert-ps.pl ../cdlabelgen-form.html
+WEBSOURCES= cdinsert-ps.pl cdlabelgen-form.html
 SOURCES    = cdlabelgen ChangeLog INSTALL README Makefile INSTALL.WEB cdlabelgen.pod cdlabelgen.1 cdlabelgen.html spec.template $(WEBSOURCES)
 POSTSCRIPT = template.ps *.eps
 DISTFILES = $(SOURCES) $(POSTSCRIPT)
@@ -32,12 +32,13 @@ INSTALL_FILE	:= install -m 0644
 #3.  $< the name of the related file that caused the action.
 #4.  $* the prefix shared by target and dependent files. 
 # ---------------
+#  No longer building RPM.
 # rpmbuild creates packages here, should be writeable by CGI user/group
 # RPM_TOPDIR	:= /usr/src/redhat
-RPM_TOPDIR	:= $(HOME)/rpmbuild
+# RPM_TOPDIR	:= $(HOME)/rpmbuild
 # ---------------
 
-all: cdlabelgen.html cdlabelgen.1
+docs: cdlabelgen.html cdlabelgen.1
 
 cdlabelgen.html: cdlabelgen.pod
 	pod2html --outfile=$@ --infile=$?
@@ -63,7 +64,7 @@ install: all
 cdlabelgen-$(VERSION).spec: spec.template
 	sed -e "s/TAG_VERSION/$(VERSION)/" < $? > $@
 	
-dist: all cdlabelgen-$(VERSION).spec
+dist: docs cdlabelgen-$(VERSION).spec
 	rm -rf cdlabelgen-$(VERSION)
 	mkdir cdlabelgen-$(VERSION)
 	mkdir cdlabelgen-$(VERSION)/postscript
@@ -74,15 +75,6 @@ dist: all cdlabelgen-$(VERSION).spec
 	zip -r cdlbl$(ZIPVERSION) cdlabelgen-$(VERSION)
 	tar cvzf cdlabelgen-$(VERSION).tgz cdlabelgen-$(VERSION)
 	rm -rf cdlabelgen-$(VERSION)
-	# On Ubuntu, the following command fails to create .rpm file,
-	# and then errors on check files stage. Fixed: allow unpackaged files in spec.template
-	# rpmbuild -ta cdlabelgen-$(VERSION).tgz  # fails, src can't be built. Ok, build bin only.
-	# mv $(RPM_TOPDIR)/RPMS/noarch/cdlabelgen-$(VERSION)*noarch.rpm .
-	mkdir -p $(RPM_TOPDIR)/{BUILD,RPMS,SPECS}
-	rpmbuild --target=noarch -tb cdlabelgen-$(VERSION).tgz
-	mv $(RPM_TOPDIR)/RPMS/noarch/cdlabelgen-$(VERSION)*noarch.rpm .
-	# .rpm not worth the trouble - can't install it, reports "Error: failed dependencies" even
-	# though system has it... and other such problems.
 
 clean:
 	rm -f *.tgz *~

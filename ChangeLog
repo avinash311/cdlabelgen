@@ -5,6 +5,7 @@ Pending
   *   ESPF work. Using EPSF 7bit ASCII (though EPS2/3 binary is fine too).
   * Rename unused script to cdinsert-pdf-gif.pl
   * Add how to install on Linux in cdinsert-ps.pl script as comments.
+  * Remove RPM from Makefile.
 
 2013-03-31
 

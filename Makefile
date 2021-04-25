@@ -2,8 +2,8 @@
 
 SHELL = /bin/bash
 
-VERSION = 4.3.0
-ZIPVERSION = 430
+VERSION = 4.3.1
+ZIPVERSION = 431
 # for 2.0.0, use 200, etc - note - lines above should have no spaces at end
 
 # Where you want cdlabelgen and related files to be
